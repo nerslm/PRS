@@ -2,7 +2,7 @@
 
 This module covers the `refine` phase. It is loaded by `/prs` when `current_stage` is `idea` and literature survey + idea generation are done.
 
-The goal: turn a vague direction into a **problem → focused method → minimal validation** document that is concrete enough to implement, elegant enough to feel paper-worthy, and current enough to resonate in the foundation-model era.
+The goal: turn a vague direction into a **problem → concrete approach → validation plan** document that is complete enough to implement, logically sound, and grounded in first principles.
 
 ---
 
@@ -28,9 +28,9 @@ The goal: turn a vague direction into a **problem → focused method → minimal
 ## Four Governing Principles
 
 1. **Do not lose the original problem.** Freeze an immutable **Problem Anchor** and reuse it verbatim in every round.
-2. **The smallest adequate mechanism wins.** Prefer the minimal intervention that directly fixes the bottleneck.
-3. **One paper, one dominant contribution.** Prefer one sharp thesis plus at most one supporting contribution.
-4. **Modern leverage is a prior, not a decoration.** When LLM / VLM / Diffusion / RL / distillation / inference-time scaling naturally fit the bottleneck, use them concretely. Do not bolt them on as buzzwords.
+2. **The right scope is whatever the problem demands.** A method paper needs focused novelty; a benchmark needs comprehensive coverage; a theory paper needs rigor. Match scope to research goal, not a template.
+3. **Every element must serve the research goal.** Nothing unjustified, nothing missing that's needed.
+4. **Ground in first principles.** The approach should follow from fundamental understanding of the problem, not from trends or conventions.
 
 ---
 
@@ -220,61 +220,59 @@ mcp__codex__codex:
   config: {"model_reasoning_effort": "xhigh"}
   prompt: |
     [INSERT Refine Persona from venue profile]
-    This is an early-stage, method-first research proposal.
 
-    Your job is NOT to reward extra modules, contribution sprawl, or a giant benchmark checklist.
-    Your job IS to stress-test whether the proposed method:
+    You are reviewing an early-stage research proposal. Your goal is to help improve it — not to impose a particular paper format.
+
+    Evaluate whether the proposal:
     (1) still solves the original anchored problem,
-    (2) is concrete enough to implement,
-    (3) presents a focused, elegant contribution,
-    (4) uses foundation-model-era techniques appropriately when they are the natural fit.
+    (2) has considered all necessary angles — no blind spots in approach, theory, or methodology,
+    (3) is logically sound with no gaps or unjustified assumptions,
+    (4) is feasible — can actually produce concrete results with the stated resources,
+    (5) is grounded in first principles, not conventions or trends.
 
     Review principles:
-    - Prefer the smallest adequate mechanism over a larger system.
-    - Penalize parallel contributions that make the paper feel unfocused.
-    - If a modern LLM / VLM / Diffusion / RL route would clearly produce a better paper, say so concretely.
-    - If already modern enough, do NOT force trendy components.
-    - Do not ask for extra experiments unless needed to prove core claims.
-    - Read the Problem Anchor first. If your fix would change the problem, call it drift.
+    - Start from the Problem Anchor. Every suggestion must serve the original research goal.
+    - The right scope is whatever the problem demands — don't push to cut if comprehensive coverage is the point, don't push to expand if tight focus is the point.
+    - Check for logical holes: unjustified assumptions, missing edge cases, reasoning gaps, theory-practice mismatches.
+    - If something important is missing (methods, baselines, perspectives, edge cases), say what and why.
+    - If something doesn't serve the research goal, explain why it should be removed.
+    - If your suggestion would change the problem being solved, flag it as drift.
 
     === PROPOSAL ===
     [Paste FULL proposal]
     === END PROPOSAL ===
 
-    Score these 7 dimensions from 1-10:
+    Score these 6 dimensions from 1-10:
 
-    1. **Problem Fidelity** (15%): Does the method still attack the original bottleneck, or has it drifted into solving something easier or different?
+    1. **Problem Fidelity** (20%): Does the proposal still attack the original problem, or has it drifted?
 
-    2. **Method Specificity** (25%): Are the interfaces, representations, losses, training stages, and inference path concrete enough that an engineer could start implementing?
+    2. **Completeness** (20%): Has the approach considered all necessary angles? Missing important methods, baselines, theoretical perspectives, or edge cases? Is the scope appropriate for the research goal?
 
-    3. **Contribution Quality** (25%): Is there one dominant mechanism-level contribution with real novelty, good parsimony, and no obvious contribution sprawl?
+    3. **Logical Soundness** (20%): Is the reasoning chain airtight? Are assumptions justified? Any logical gaps between problem, approach, and expected evidence?
 
-    4. **Frontier Leverage** (15%): Does the proposal use current foundation-model-era primitives appropriately when they are the right tool, instead of defaulting to old-school module stacking?
+    4. **Feasibility** (15%): Is the proposal concrete enough to implement? Can it actually produce results with the stated resources and timeline?
 
-    5. **Feasibility** (10%): Can this method be trained and integrated with the stated resources and data assumptions?
+    5. **Significance** (15%): Is this worth doing? Would the results (positive or negative) advance understanding in the field?
 
-    6. **Validation Focus** (5%): Are the proposed experiments minimal but sufficient to validate the core claims? Is there unnecessary experimental bloat?
+    6. **First Principles** (10%): Is the approach grounded in fundamental understanding of the problem, or just following conventions / trends / surface-level patterns?
 
-    7. **Venue Readiness** (5%): If executed well, would the contribution feel sharp and timely enough for [VENUE]?
-
-    **OVERALL SCORE** (1-10): Weighted toward Problem Fidelity, Method Specificity, Contribution Quality, and Frontier Leverage.
-    Use this weighting: Problem Fidelity 15%, Method Specificity 25%, Contribution Quality 25%, Frontier Leverage 15%, Feasibility 10%, Validation Focus 5%, Venue Readiness 5%.
+    **OVERALL SCORE** (1-10): Use this weighting: Problem Fidelity 20%, Completeness 20%, Logical Soundness 20%, Feasibility 15%, Significance 15%, First Principles 10%.
 
     For each dimension scoring < 7, provide:
     - The specific weakness
-    - A concrete fix at the method level (interface / loss / training recipe / integration point / deletion of unnecessary parts)
+    - A concrete, actionable fix
     - Priority: CRITICAL / IMPORTANT / MINOR
 
     Then add:
-    - **Simplification Opportunities**: 1-3 concrete ways to delete, merge, or reuse components while preserving the main claim. Write "NONE" if already tight.
-    - **Modernization Opportunities**: 1-3 concrete ways to replace old-school pieces with more natural foundation-model-era primitives if genuinely better. Write "NONE" if already modern enough.
-    - **Drift Warning**: "NONE" if the proposal still solves the anchored problem; otherwise explain the drift clearly.
+    - **Missing Elements**: What the proposal should add — methods, perspectives, analyses, or edge cases it hasn't considered. Write "NONE" if complete.
+    - **Unnecessary Elements**: What could be removed because it doesn't serve the research goal. Write "NONE" if everything is justified.
+    - **Drift Warning**: "NONE" if the proposal still solves the anchored problem; otherwise explain the drift.
     - **Verdict**: READY / REVISE / RETHINK
 
     Verdict rule:
-    - READY: overall score >= 9, no meaningful drift, one focused dominant contribution, and no obvious complexity bloat remains
-    - REVISE: the direction is promising but not yet at READY bar
-    - RETHINK: the core mechanism or framing is still fundamentally off
+    - READY: overall score >= 9, no meaningful drift, logically sound, scope appropriate for the goal
+    - REVISE: the direction is promising but has gaps or weaknesses to address
+    - RETHINK: the core approach or framing is fundamentally off
 ```
 
 **CRITICAL**: Save `threadId` from this call. Save FULL raw response verbatim.
@@ -292,28 +290,26 @@ mcp__codex__codex-reply:
     [Round N re-evaluation]
 
     I revised the proposal based on your feedback.
-    First, check whether the original Problem Anchor is still preserved.
-    Second, judge whether the method is now more concrete, more focused, and more current.
 
     Key changes:
-    1. [Method change 1]
-    2. [Method change 2]
-    3. [Simplification / modernization / pushback if any]
+    1. [Change 1]
+    2. [Change 2]
+    3. [Pushback on specific feedback, if any]
 
     === REVISED PROPOSAL ===
     [Paste the FULL revised proposal]
     === END REVISED PROPOSAL ===
 
     Please:
-    - Re-score the same 7 dimensions and overall
+    - Re-score the same 6 dimensions and overall
     - State whether the Problem Anchor is preserved or drifted
-    - State whether the dominant contribution is now sharper or still too broad
-    - State whether the method is simpler or still overbuilt
-    - State whether the frontier leverage is now appropriate or still old-school / forced
-    - Focus new critiques on missing mechanism, weak training signal, weak integration point, pseudo-novelty, or unnecessary complexity
+    - State whether completeness has improved — are former blind spots now addressed?
+    - State whether logical gaps have been closed
+    - State whether feasibility concerns are resolved
+    - Focus new critiques on remaining logical holes, missing perspectives, unjustified assumptions, or first-principles violations
     - Use the same verdict rule: READY only if overall score >= 9 and no blocking issue remains
 
-    Same output format: 7 scores, overall score, verdict, drift warning, simplification opportunities, modernization opportunities, remaining action items.
+    Same output format: 6 scores, overall score, verdict, drift warning, missing elements, unnecessary elements, remaining action items.
 ```
 
 ---
@@ -327,22 +323,22 @@ mcp__codex__codex-reply:
 3. Does the current method still solve it?
 4. Which reviewer suggestions would cause drift?
 
-### Simplicity Check (before every revision)
+### Scope & Logic Check (before every revision)
 
-1. What is the dominant contribution now?
-2. What components can be removed, merged, or kept frozen?
-3. Which reviewer suggestions add unnecessary complexity?
-4. If a frontier primitive is central, is its role still crisp?
+1. Is the current scope appropriate for the research goal?
+2. Is anything important missing that should be added?
+3. Is anything included that doesn't serve the goal?
+4. Are all assumptions justified from first principles?
 
 ### Revision Strategy
 
-- **Valid feedback**: sharpen mechanism, simplify, modernize if paper improves.
+- **Valid feedback**: address the gap, fix the logic, improve completeness.
 - **Debatable feedback**: revise but explain reasoning with evidence.
-- **Wrong/drifting/over-complicating**: push back with evidence from Problem Anchor.
+- **Wrong/drifting**: push back with evidence from Problem Anchor.
 
-Bias toward: sharper central contribution, fewer moving parts, cleaner backbone reuse, natural frontier leverage, leaner claim-driven experiments.
+Bias toward: logical completeness, first-principles grounding, appropriate scope for the problem.
 
-**Do NOT add multiple parallel contributions to chase score.** If reviewer requests another module, first ask whether the same gain can come from a better interface, distillation signal, reward model, or inference policy.
+**Do NOT change scope to chase score.** If reviewer suggests adding or cutting, first ask whether the change serves the original research goal.
 
 Save to `refine-logs/round-N-refinement.md` — MUST contain the full revised proposal, not just diffs.
 
@@ -373,23 +369,22 @@ High-level round-by-round review record:
 
 ## Round-by-Round Resolution Log
 
-| Round | Main Reviewer Concerns | What This Round Simplified / Modernized | Solved? | Remaining Risk |
+| Round | Main Reviewer Concerns | What This Round Changed | Solved? | Remaining Risk |
 |-------|-------------------------|------------------------------------------|---------|----------------|
 | 1     | [top issues from review] | [main method changes]                    | [yes / partial / no] | [if any] |
 | 2     | ...                     | ...                                      | ...     | ...            |
 
 ## Overall Evolution
-- [How the method became more concrete]
-- [How the dominant contribution became more focused]
-- [How unnecessary complexity was removed]
-- [How modern technical leverage improved or stayed intentionally minimal]
+- [How completeness improved — blind spots addressed]
+- [How logical soundness improved — gaps closed]
+- [How scope was adjusted to match the research goal]
 - [How drift was avoided or corrected]
 
 ## Final Status
 - Anchor status: [preserved / corrected / unresolved]
-- Focus status: [tight / slightly broad / still diffuse]
-- Modernity status: [appropriately frontier-aware / intentionally conservative / still old-school]
-- Strongest parts of final method:
+- Completeness: [comprehensive / has gaps / major blind spots]
+- Logical soundness: [airtight / minor gaps / significant holes]
+- Strongest parts of final proposal:
 - Remaining weaknesses:
 ```
 
@@ -428,8 +423,8 @@ Full report with raw reviews:
 
 ## Score Evolution
 
-| Round | Problem Fidelity | Method Specificity | Contribution Quality | Frontier Leverage | Feasibility | Validation Focus | Venue Readiness | Overall | Verdict |
-|-------|------------------|--------------------|----------------------|-------------------|-------------|------------------|-----------------|---------|---------|
+| Round | Problem Fidelity | Completeness | Logical Soundness | Feasibility | Significance | First Principles | Overall | Verdict |
+|-------|------------------|--------------|-------------------|-------------|--------------|------------------|---------|---------|
 | 1     | ...              | ...                | ...                  | ...               | ...         | ...              | ...             | ...     | ...     |
 
 ## Round-by-Round Review Record
@@ -443,10 +438,10 @@ Full report with raw reviews:
 - Canonical clean version lives in `refine-logs/FINAL_PROPOSAL.md`
 - Summarize the final thesis in 3-5 bullets here
 
-## Method Evolution Highlights
-1. [Most important simplification or focusing move]
-2. [Most important mechanism upgrade]
-3. [Most important modernization or justification for staying simple]
+## Proposal Evolution Highlights
+1. [Most important completeness improvement]
+2. [Most important logical gap closed]
+3. [Most important scope adjustment]
 
 ## Pushback / Drift Log
 | Round | Reviewer Said | Author Response | Outcome |
@@ -492,11 +487,11 @@ Every round-N-refinement.md must use this template (full anchored proposal, not 
 - Why the revised method still addresses it:
 - Reviewer suggestions rejected as drift:
 
-## Simplicity Check
-- Dominant contribution after revision:
-- Components removed or merged:
-- Reviewer suggestions rejected as unnecessary complexity:
-- Why the remaining mechanism is still the smallest adequate route:
+## Scope & Logic Check
+- Is scope appropriate for the research goal after revision?
+- What was added to address blind spots?
+- What was removed as unjustified?
+- Are all assumptions grounded in first principles?
 
 ## Changes Made
 
@@ -526,15 +521,15 @@ Final score: X/10 (Verdict: READY / REVISE / RETHINK)
 Anchor status:
 - [preserved / drift corrected / unresolved concern]
 
-Focus status:
-- [tight / slightly broad / still diffuse]
+Completeness:
+- [comprehensive / gaps addressed / remaining blind spots]
 
-Modernity status:
-- [appropriately frontier-aware / intentionally conservative / still old-school]
+Logical soundness:
+- [airtight / minor gaps / significant holes]
 
-Key method upgrades:
-- [method change 1]
-- [method change 2]
+Key improvements:
+- [improvement 1]
+- [improvement 2]
 
 Remaining concerns:
 - [if any]
@@ -551,13 +546,11 @@ Update `progress.json`: set refine phase to done with final score, round count, 
 ## Quality Constraints
 
 - **Anchor first, every round.** Always carry forward the same Problem Anchor.
-- **One paper, one dominant contribution.** Avoid multiple parallel contributions.
-- **The smallest adequate mechanism wins.** Bigger is not automatically better.
-- **Prefer reuse over invention.** Start from strong existing backbones.
-- **Modern techniques are a prior, not a decoration.**
-- **Minimal experiments.** Only enough to prove core claims in this phase.
-- **Review the mechanism, not the parts count.** A long module list is not novelty.
-- **Pushback is encouraged.** Argue back with evidence when feedback causes drift or complexity.
+- **Scope matches the goal.** Don't cut if coverage is the point; don't expand if focus is the point.
+- **Every element earns its place.** Nothing unjustified, nothing critical missing.
+- **First principles over conventions.** The approach should follow from understanding, not from "everyone does it this way."
+- **Check your logic.** Assumptions justified? Reasoning chain complete? Edge cases considered?
+- **Pushback is encouraged.** Argue back with evidence when feedback causes drift or changes the research goal.
 - **ALWAYS use `config: {"model_reasoning_effort": "xhigh"}`** for all Codex review calls.
 - **Save threadId** and use `mcp__codex__codex-reply` for later rounds.
 - **Do not fabricate results.** Only describe expected evidence.
