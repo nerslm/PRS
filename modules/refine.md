@@ -194,19 +194,19 @@ mcp__codex__codex:
 
     Score these 6 dimensions from 1-10:
 
-    1. **Problem Fidelity** (10%): Does the proposal still attack the original problem, or has it drifted?
+    1. **Significance** (30%): Is this worth doing? Would the results (positive or negative) advance understanding in the field?
 
-    2. **Completeness** (10%): Has the approach considered all necessary angles? Missing important methods, baselines, theoretical perspectives, or edge cases? Is the scope appropriate for the research goal?
+    2. **Feasibility** (20%): Is the proposal concrete enough to implement? Can it actually produce results with the stated resources and timeline?
 
-    3. **Logical Soundness** (10%): Is the reasoning chain airtight? Are assumptions justified? Any logical gaps between problem, approach, and expected evidence?
+    3. **First Principles** (20%): Is the approach grounded in fundamental understanding of the problem, or just following conventions / trends / surface-level patterns?
 
-    4. **Feasibility** (20%): Is the proposal concrete enough to implement? Can it actually produce results with the stated resources and timeline?
+    4. **Problem Fidelity** (10%): Does the proposal still attack the original problem, or has it drifted?
 
-    5. **Significance** (30%): Is this worth doing? Would the results (positive or negative) advance understanding in the field?
+    5. **Completeness** (10%): Has the approach considered all necessary angles? Missing important methods, baselines, theoretical perspectives, or edge cases? Is the scope appropriate for the research goal?
 
-    6. **First Principles** (20%): Is the approach grounded in fundamental understanding of the problem, or just following conventions / trends / surface-level patterns?
+    6. **Logical Soundness** (10%): Is the reasoning chain airtight? Are assumptions justified? Any logical gaps between problem, approach, and expected evidence?
 
-    **OVERALL SCORE** (1-10): Use this weighting: Problem Fidelity 10%, Completeness 10%, Logical Soundness 10%, Feasibility 20%, Significance 30%, First Principles 20%.
+    **OVERALL SCORE** (1-10): Use this weighting: Significance 30%, Feasibility 20%, First Principles 20%, Problem Fidelity 10%, Completeness 10%, Logical Soundness 10%.
 
     For each dimension scoring < 7, provide:
     - The specific weakness
@@ -373,8 +373,8 @@ Full report with raw reviews:
 
 ## Score Evolution
 
-| Round | Problem Fidelity | Completeness | Logical Soundness | Feasibility | Significance | First Principles | Overall | Verdict |
-|-------|------------------|--------------|-------------------|-------------|--------------|------------------|---------|---------|
+| Round | Significance | Feasibility | First Principles | Problem Fidelity | Completeness | Logical Soundness | Overall | Verdict |
+|-------|--------------|-------------|------------------|------------------|--------------|-------------------|---------|---------|
 | 1     | ...              | ...                | ...                  | ...               | ...         | ...              | ...             | ...     | ...     |
 
 ## Round-by-Round Review Record
