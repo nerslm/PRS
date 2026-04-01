@@ -22,8 +22,6 @@ PRS is a state-driven thin harness for long-running scientific research. The mai
 | `gates` | Pause only at stage boundaries (idea selection, experiment plan approval, paper outline approval). Auto-proceed within stages. |
 | `manual` | Pause after every major action to report results and get user direction. |
 
-**Autonomy controls PAUSING, not SKIPPING.** Every stage and every step within a stage is mandatory in all modes. `full` just means you don't wait for the user — you still do every literature search, every Codex review, every refinement round, every experiment, every review loop.
-
 ---
 
 ## Research Process Overview
@@ -134,7 +132,7 @@ PRS is a state-driven thin harness for long-running scientific research. The mai
 
 **Gates** exist at: idea→experiment, experiment plan approval, paper outline approval. Gates are **skipped when `autonomy=full`**, the agent auto-selects the best option. In `gates` mode, pause at these transitions. In `manual` mode, pause after every action.
 
-**Verification**: before stage transition, check required artifacts are `ready`.
+**Verification**: stages advance only in order (idea → experiment → review → paper). Before each transition, verify the condition above is met and all required artifacts for the current stage are `ready`.
 
 ---
 
@@ -203,4 +201,4 @@ If a module doesn't cover an edge case, read the original skill in `archive/{ski
 - **Large files** — if Write fails, use `Bash(cat << 'EOF' > file)`
 - **Anti-hallucination citations** — DBLP → CrossRef → `[VERIFY]` (see `modules/paper-write.md`)
 - **You do the research, sub-agents do the chores**
-- **Never skip steps** — autonomy=full means "don't wait for user", NOT "skip reviews/refinement/experiments". Every step in the pipeline is mandatory.
+- **Never skip steps** — autonomy controls pausing, not which steps to execute

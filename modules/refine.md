@@ -1,6 +1,6 @@
 # Refine Context Module — Problem-Anchored Method Refinement
 
-This module covers the `refine` phase. It is loaded by `/prs` when `current_phase == "refine"`.
+This module covers the `refine` phase. It is loaded by `/prs` when `current_stage` is `idea` and literature survey + idea generation are done.
 
 The goal: turn a vague direction into a **problem → focused method → minimal validation** document that is concrete enough to implement, elegant enough to feel paper-worthy, and current enough to resonate in the foundation-model era.
 

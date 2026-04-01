@@ -13,7 +13,7 @@ This module covers the `review_loop` phase. It drives an autonomous cycle of ext
 ## Outputs
 
 - **`AUTO_REVIEW.md`** — cumulative review log (one section per round, plus final summary and method description)
-- **Updated `progress.json`** — `review_loop` phase object updated each round with `round`, `score`, `thread_id`, `status`
+- **Updated `progress.json`** — `stages.review` object updated each round with `round`, `score`, `thread_id`, `status`
 - **Updated `session.json`** — thread IDs and critical context for session handoff
 - **Code/analysis changes** — fixes implemented during Phase C
 - **New experiment results** — from any experiments launched during the loop
@@ -223,7 +223,7 @@ If an experiment takes > 30 minutes, launch it and continue with other fixes whi
 
 Append to `AUTO_REVIEW.md` (see AUTO_REVIEW.md Format section below for exact template).
 
-**Update `progress.json`** — write the `review_loop` phase object with current `round`, `score`, `thread_id`, and `status`.
+**Update `progress.json`** — write the `stages.review` object with current `round`, `score`, `thread_id`, and `status`.
 
 Increment round counter and return to Phase A.
 
@@ -231,7 +231,7 @@ Increment round counter and return to Phase A.
 
 When loop ends (positive assessment or max rounds):
 
-1. Update `progress.json` review_loop phase with `"status": "done"`
+1. Update `progress.json` `stages.review` with `"status": "done"`
 2. Write final summary to `AUTO_REVIEW.md`
 3. Update project notes with conclusions
 4. **Write method/pipeline description** to `AUTO_REVIEW.md` under a `## Method Description` section — a concise 1-2 paragraph description of the final method, its architecture, and data flow. This serves as input for paper figure generation (so it can generate architecture diagrams automatically).
@@ -245,16 +245,16 @@ When loop ends (positive assessment or max rounds):
 
 ## Crash Recovery
 
-Long-running loops may hit the context window limit, triggering automatic compaction. To survive this, state is persisted in `progress.json`'s `review_loop` phase object after each round.
+Long-running loops may hit the context window limit, triggering automatic compaction. To survive this, state is persisted in `progress.json`'s `stages.review` object after each round.
 
 ### State Fields in progress.json
 
-The `review_loop` phase object contains these fields for crash recovery:
+The `review` stage object contains these fields for crash recovery:
 
 ```json
 {
-  "phases": {
-    "review_loop": {
+  "stages": {
+    "review": {
       "status": "in_progress",
       "round": 2,
       "score": 5.0,
@@ -262,7 +262,6 @@ The `review_loop` phase object contains these fields for crash recovery:
       "last_verdict": "not ready",
       "pending_experiments": ["screen_name_1"],
       "timestamp": "2026-03-13T21:00:00",
-      "outputs": [],
       "summary": ""
     }
   }
@@ -275,12 +274,12 @@ The `review_loop` phase object contains these fields for crash recovery:
 
 ### Recovery Logic on Initialization
 
-1. Read `progress.json` and inspect the `review_loop` phase object:
+1. Read `progress.json` and inspect the `stages.review` object:
    - If `status` is `"not_started"`: **fresh start** (normal case)
    - If `status` is `"done"`: **fresh start** (previous loop finished normally)
    - If `status` is `"in_progress"` AND `timestamp` is older than 24 hours: **fresh start** (stale state from a killed/abandoned run — reset the phase and start over)
    - If `status` is `"in_progress"` AND `timestamp` is within 24 hours: **resume**
-     - Recover `round`, `thread_id`, `score`, `pending_experiments` from the phase object
+     - Recover `round`, `thread_id`, `score`, `pending_experiments` from the stage object
      - Read `AUTO_REVIEW.md` to restore full context of prior rounds
      - If `pending_experiments` is non-empty, check if they have completed (e.g., check screen sessions)
      - Resume from the next round (round = saved round + 1)
@@ -531,10 +530,10 @@ When implementing fixes from the reviewer's action items, follow this priority o
 
 ## Verification Criteria
 
-Before transitioning out of `review_loop` phase:
+Before transitioning out of review stage:
 
 - `AUTO_REVIEW.md` exists and contains at least one complete round (Assessment + Raw Response + Actions + Results + Status)
-- `progress.json` review_loop phase has `"status": "done"` with final `score` and `round` recorded
-- Either the score meets `score_threshold_review` with a positive verdict ("ready"/"almost"/"accept"/"sufficient"/"ready for submission"), OR `max_review_rounds` have been completed
+- `progress.json` `stages.review` has `"status": "done"` with final `score` and `round` recorded
+- Either the score >= `score_threshold_review`, OR `max_review_rounds` have been completed
 - If max rounds reached without passing: remaining blockers are documented with effort estimates
 - Method description section is written in `AUTO_REVIEW.md` for downstream paper figure generation

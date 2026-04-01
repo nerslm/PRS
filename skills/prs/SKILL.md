@@ -52,11 +52,12 @@ Read the relevant context module (see CLAUDE.md module table) for domain guidanc
 3. **Verify** — check output files exist
 4. **Check loop score** — if in refine/review/paper-improve: score < threshold AND rounds remain → continue the loop, don't advance stage.
 5. **Write next `next_action`** — what to do next
-6. **Check autonomy mode**:
+6. **Stage advancement** — stages advance only in order: idea → experiment → review → paper. Before changing `current_stage`, verify the transition condition from CLAUDE.md is met and all required artifacts for the current stage are `ready`.
+7. **Check autonomy mode**:
    - `full` → keep going, loop back to Step 3
    - `gates` → keep going UNLESS at a stage boundary gate — then pause
    - `manual` → pause, report, ask
-7. **Append to history**
+8. **Append to history**
 
 ## Step 5: Session End
 

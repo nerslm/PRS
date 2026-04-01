@@ -1,6 +1,6 @@
 # Research Context Module — Literature Survey, Idea Generation, Novelty Verification
 
-This module covers the `lit_survey` and `idea_generation` phases. It is loaded by `/prs` when `current_phase` is one of these.
+This module covers the `lit_survey` and `idea_generation` phases. It is loaded by `/prs` when `current_stage` is `idea`.
 
 ---
 
