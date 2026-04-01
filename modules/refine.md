@@ -51,159 +51,109 @@ If later reviewer feedback would change the problem being solved, mark that as *
 
 ## Phase 1: Build the Initial Proposal
 
-### Step 1.1: Scan Grounding Material
+### Step 1.1: Understand the Research Landscape
 
-Check `papers/` and `literature/` first. Read only relevant parts to answer:
-- What mechanism do current methods use?
-- Where exactly do they fail for this problem?
-- Which recent LLM / VLM / Diffusion / RL era techniques are actually relevant here?
-- What training objectives, representations, or interfaces are reusable?
-- What details distinguish a real method from a renamed high-level idea?
+Read existing grounding material (`papers/`, `literature/`, `IDEA_REPORT.md`). Answer:
+- What is the current state of knowledge on this problem?
+- Where are the gaps — what remains unsolved, untested, or poorly understood?
+- What approaches have been tried, and what are their limitations?
+- What resources (data, compute, tools, existing code) are available?
 
-If local material is insufficient, search recent top-venue/arXiv work online. Focus on **method sections, training setup, and failure modes**, not just abstracts.
+If local material is insufficient, search recent literature online. Focus on understanding the **structure of the problem**, not just cataloging prior work.
 
-### Step 1.2: Identify the Technical Gap
+### Step 1.2: Sharpen the Research Question
 
-Make the gap operational:
-1. **Current pipeline failure point**: where does the baseline break?
-2. **Why naive fixes are insufficient**: larger context, more data, prompting, memory bank, or stacking more modules.
-3. **Smallest adequate intervention**: the least additional mechanism that could plausibly fix the bottleneck.
-4. **Frontier-native alternative**: a more current route using foundation-model-era primitives that better matches the bottleneck?
-5. **Core technical claim**: exact mechanism claim that could survive top-venue scrutiny.
-6. **Required evidence**: minimum proof needed to defend that claim.
+Make the question precise and falsifiable:
+1. **The gap**: What specific knowledge or capability is missing?
+2. **Why it persists**: Why haven't existing approaches closed this gap? What is the structural reason, not just "nobody tried"?
+3. **The hypothesis**: What do you believe to be true that, if validated, would close the gap?
+4. **Required evidence**: What would constitute convincing support — and what would falsify it?
 
-### Step 1.3: Choose the Sharpest Route
+### Step 1.3: Design the Approach
 
-Compare two candidate routes if both are plausible:
-- **Route A: Elegant minimal route** — smallest mechanism targeting the bottleneck.
-- **Route B: Frontier-native route** — uses LLM / VLM / Diffusion / RL / distillation / inference-time scaling *only if* it gives a cleaner or stronger story.
+The approach must answer "how will we answer this research question?" Think from first principles — what does the problem structure demand?
 
-Decide by: which is more likely to become a strong paper, which has cleaner novelty, which avoids contribution sprawl. If both are weak, rethink the framing.
+1. **One-sentence thesis**: The single strongest claim this research will make.
+2. **Approach overview**: How the question will be answered — algorithm, study design, theoretical framework, evaluation methodology, or any combination.
+3. **Key design decisions**: For each major choice, state what was chosen, what alternatives exist, and why this choice follows from the problem (not from convention or trend).
+4. **Scope**: What is in scope, what is explicitly out, and why these boundaries are the right ones for this research goal.
+5. **Expected contributions**: What the field gains if this succeeds — new knowledge, new tools, new understanding, or new evidence.
+6. **Comparison to alternatives**: Why this approach over the obvious alternatives.
+7. **Failure modes**: What could go wrong, how to detect it, and what the fallback is.
 
-### Step 1.4: Concretize the Method
+### Step 1.4: Plan Validation
 
-The proposal must answer "how would we actually build this?" Cover:
+For each core claim, define how it will be validated:
+- The claim being tested
+- The evidence needed (experiment, proof, analysis, comparison, coverage)
+- The success criterion — what outcome would be convincing
+- What a negative result would mean — is it still publishable?
 
-1. **One-sentence method thesis**: the single strongest mechanism claim.
-2. **Contribution focus**: one dominant + at most one supporting contribution.
-3. **Complexity budget**: what is frozen/reused, what is new, what tempting additions are excluded.
-4. **System graph**: modules, data flow, inputs, outputs.
-5. **Representation design**: latent, embedding, plan token, reward signal, memory state, alignment space.
-6. **Training recipe**: data source, supervision, pseudo-labeling, negatives, curriculum, losses, weighting, stagewise vs joint.
-7. **Inference path**: how trained components are used at test time.
-8. **Why the mechanism stays small**: why a larger stack is unnecessary.
-9. **Exact role of any frontier primitive**: whether it acts as planner, teacher, critic, reward model, generator prior, search controller, or distillation source.
-10. **Failure handling**: what could go wrong + fallback/diagnostic.
-11. **Novelty and elegance argument**: why more than naming a module, why the paper looks focused.
+The validation plan should match the research type: experiments for empirical claims, proofs for theoretical claims, comprehensive coverage for benchmark claims, statistical rigor for observational claims.
 
-If the method is only "add a module" or "use a planner," it is **not concrete enough**.
+### Step 1.5: Write the Initial Proposal
 
-### Step 1.5: Design Minimal Claim-Driven Validation
-
-For each core claim, define the **smallest strong experiment**:
-- the claim being tested
-- the necessary baseline or ablation
-- the decisive metric
-- the expected directional outcome
-
-Rules:
-- Ensure one block directly supports the Problem Anchor
-- If complexity risk exists, include one simplification/deletion check
-- If a frontier primitive is central, include one necessity check
-- Default to 1-3 core experiment blocks (full roadmap is for experiment_plan phase)
-
-Soft caps: MAX_PRIMARY_CLAIMS = 2, MAX_NEW_TRAINABLE_COMPONENTS = 2, MAX_CORE_EXPERIMENTS = 3.
-
-### Step 1.6: Write the Initial Proposal
-
-Save to `refine-logs/round-0-initial-proposal.md` using the full proposal template:
+Save to `refine-logs/round-0-initial-proposal.md` using the proposal template below. The template is intentionally abstract — adapt the sections to fit your research type.
 
 ```markdown
 # Research Proposal: [Title]
 
 ## Problem Anchor
-- Bottom-line problem:
-- Must-solve bottleneck:
+- Research question:
+- Core gap in current knowledge:
+- Why this matters (significance):
 - Non-goals:
-- Constraints:
+- Constraints (resources, time, data, venue):
 - Success condition:
 
-## Technical Gap
-[Why current methods fail, why naive bigger systems are not enough, and what mechanism is missing]
+## Research Context
+[Current state of knowledge. Key prior work and their limitations. Why the gap persists — the structural reason, not just "nobody tried." What we can build on.]
 
-## Method Thesis
+## Thesis
 - One-sentence thesis:
-- Why this is the smallest adequate intervention:
-- Why this route is timely in the foundation-model era:
+- First-principles argument: why this approach follows from the structure of the problem, not from convention or trend.
 
-## Contribution Focus
-- Dominant contribution:
-- Optional supporting contribution:
-- Explicit non-contributions:
+## Contributions
+- Primary contribution:
+- Supporting contributions (if any):
+- Explicit non-goals:
 
-## Proposed Method
-### Complexity Budget
-- Frozen / reused backbone:
-- New trainable components:
-- Tempting additions intentionally not used:
+## Approach
+### Overview
+[High-level description of how the research question will be answered. This could be a method, an evaluation framework, a theoretical analysis, an empirical study, or a combination.]
 
-### System Overview
-[Step-by-step pipeline or ASCII graph]
+### Key Design Decisions
+[For each major decision: what was chosen, what alternatives exist, why this choice follows from the problem structure. Ground every decision in first principles.]
 
-### Core Mechanism
-- Input / output:
-- Architecture or policy:
-- Training signal / loss:
-- Why this is the main novelty:
+### Scope and Boundaries
+- In scope:
+- Out of scope:
+- Why these boundaries serve the research goal:
 
-### Optional Supporting Component
-- Only include if truly necessary:
-- Input / output:
-- Training signal / loss:
-- Why it does not create contribution sprawl:
+## Validation Plan
+### Claim 1: [claim]
+- Evidence needed:
+- Validation approach:
+- Success criterion:
+- What a negative result means:
 
-### Modern Primitive Usage
-- Which LLM / VLM / Diffusion / RL-era primitive is used:
-- Exact role in the pipeline:
-- Why it is more natural than an old-school alternative:
+### Claim 2: [if applicable]
+- Evidence needed:
+- Validation approach:
+- Success criterion:
+- What a negative result means:
 
-### Integration into Base Generator / Downstream Pipeline
-[Where the new method attaches, what is frozen, what is trainable, inference order]
-
-### Training Plan
-[Stagewise or joint training, losses, data construction, pseudo-labels, schedules]
-
-### Failure Modes and Diagnostics
-- [Failure mode]:
-- [How to detect]:
-- [Fallback or mitigation]:
-
-### Novelty and Elegance Argument
-[Closest work, exact difference, why this is a focused mechanism-level contribution rather than a module pile-up]
-
-## Claim-Driven Validation Sketch
-### Claim 1: [Main claim]
-- Minimal experiment:
-- Baselines / ablations:
-- Metric:
-- Expected evidence:
-
-### Claim 2: [Optional]
-- Minimal experiment:
-- Baselines / ablations:
-- Metric:
-- Expected evidence:
-
-## Experiment Handoff Inputs
-- Must-prove claims:
-- Must-run ablations:
-- Critical datasets / metrics:
+## Feasibility
+- Required resources (compute, data, tools):
+- Timeline estimate:
 - Highest-risk assumptions:
+- Fallback if key assumption fails:
 
-## Compute & Timeline Estimate
-- Estimated GPU-hours:
-- Data / annotation cost:
-- Timeline:
+## Experiment Handoff
+- Claims that must be validated:
+- Critical datasets / benchmarks / metrics:
+- Key baselines or comparisons:
+- Highest-risk assumptions to test first:
 ```
 
 ---
@@ -244,19 +194,19 @@ mcp__codex__codex:
 
     Score these 6 dimensions from 1-10:
 
-    1. **Problem Fidelity** (20%): Does the proposal still attack the original problem, or has it drifted?
+    1. **Problem Fidelity** (10%): Does the proposal still attack the original problem, or has it drifted?
 
-    2. **Completeness** (20%): Has the approach considered all necessary angles? Missing important methods, baselines, theoretical perspectives, or edge cases? Is the scope appropriate for the research goal?
+    2. **Completeness** (10%): Has the approach considered all necessary angles? Missing important methods, baselines, theoretical perspectives, or edge cases? Is the scope appropriate for the research goal?
 
-    3. **Logical Soundness** (20%): Is the reasoning chain airtight? Are assumptions justified? Any logical gaps between problem, approach, and expected evidence?
+    3. **Logical Soundness** (10%): Is the reasoning chain airtight? Are assumptions justified? Any logical gaps between problem, approach, and expected evidence?
 
-    4. **Feasibility** (15%): Is the proposal concrete enough to implement? Can it actually produce results with the stated resources and timeline?
+    4. **Feasibility** (20%): Is the proposal concrete enough to implement? Can it actually produce results with the stated resources and timeline?
 
-    5. **Significance** (15%): Is this worth doing? Would the results (positive or negative) advance understanding in the field?
+    5. **Significance** (30%): Is this worth doing? Would the results (positive or negative) advance understanding in the field?
 
-    6. **First Principles** (10%): Is the approach grounded in fundamental understanding of the problem, or just following conventions / trends / surface-level patterns?
+    6. **First Principles** (20%): Is the approach grounded in fundamental understanding of the problem, or just following conventions / trends / surface-level patterns?
 
-    **OVERALL SCORE** (1-10): Use this weighting: Problem Fidelity 20%, Completeness 20%, Logical Soundness 20%, Feasibility 15%, Significance 15%, First Principles 10%.
+    **OVERALL SCORE** (1-10): Use this weighting: Problem Fidelity 10%, Completeness 10%, Logical Soundness 10%, Feasibility 20%, Significance 30%, First Principles 20%.
 
     For each dimension scoring < 7, provide:
     - The specific weakness
@@ -470,7 +420,7 @@ Full report with raw reviews:
 
 ### 5.4: Finalize `refine-logs/score-history.md`
 
-Ensure it contains the complete score evolution table using all 7 dimensions.
+Ensure it contains the complete score evolution table using all 6 dimensions.
 
 ### 5.5: `refine-logs/round-N-refinement.md` Template
 
