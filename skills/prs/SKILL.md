@@ -70,6 +70,6 @@ Read the relevant context module (see CLAUDE.md module table) for domain guidanc
 - **Delegate grunt work, retain judgment**
 - **One action at a time** — complete, update, then proceed
 - **Verify before advancing stage**
-- **Check `autonomy` before pausing** — the ONLY thing that controls whether you pause
+- **Autonomy controls pausing, not skipping** — `full` means don't wait for user, NOT skip steps. Every review, refinement loop, and experiment is mandatory.
 - **Loop control is score-only** — refine/review/paper-improve continue until score >= threshold or max rounds. Ignore verdict text.
 - **Large files** — if Write fails, use `Bash(cat << 'EOF' > file)`
